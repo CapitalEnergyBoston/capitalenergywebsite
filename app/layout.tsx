@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/app/components/site-header";
 import { SiteFooter } from "@/app/components/site-footer";
@@ -10,33 +10,33 @@ const inter = Inter({
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-serif",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
-  axes: ["opsz"],
 });
 
 const siteName = "Capital Energy";
 const siteDescription =
-  "Capital Energy is a Boston-based energy consulting firm helping organizations navigate procurement, sustainability, and the transition to cleaner, lower-cost power.";
+  "Capital Energy helps climate tech companies translate complex work into compelling brands. Strategy, storytelling, and go-to-market for the founders reinventing legacy industries.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://capitalenergyboston.github.io"),
+  metadataBase: new URL("https://capitalenergy.io"),
   title: {
-    default: `${siteName} — Energy Consulting`,
+    default: `${siteName} — Brand & go-to-market for climate tech`,
     template: `%s — ${siteName}`,
   },
   description: siteDescription,
   keywords: [
-    "energy consulting",
-    "energy procurement",
-    "sustainability advisory",
-    "energy strategy",
-    "Boston energy consultants",
+    "climate tech marketing",
+    "climate tech branding",
+    "energy startup marketing",
+    "go-to-market strategy",
+    "positioning and messaging",
+    "climate storytelling",
   ],
   openGraph: {
-    title: `${siteName} — Energy Consulting`,
+    title: `${siteName} — Brand & go-to-market for climate tech`,
     description: siteDescription,
     siteName,
     type: "website",
@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <SiteHeader />

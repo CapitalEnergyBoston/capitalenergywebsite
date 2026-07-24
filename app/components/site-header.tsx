@@ -12,7 +12,6 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Close the mobile menu whenever the route changes.
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
@@ -29,34 +28,37 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-line bg-background/85 backdrop-blur-md"
-          : "border-b border-transparent bg-background/0"
+          ? "border-b border-line bg-background/80 backdrop-blur-md"
+          : "border-b border-transparent"
       }`}
     >
       <Container className="flex h-18 items-center justify-between py-4">
-        <Logo />
+        <Logo priority />
 
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors ${
-                isActive(link.href)
-                  ? "text-brand"
-                  : "text-muted hover:text-ink"
+              className={`group relative text-sm font-medium transition-colors ${
+                isActive(link.href) ? "text-navy" : "text-muted hover:text-ink"
               }`}
             >
               {link.label}
+              <span
+                className={`absolute -bottom-1.5 left-0 h-0.5 rounded-full bg-accent transition-all duration-300 ${
+                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
             </Link>
           ))}
         </nav>
 
         <div className="hidden md:block">
           <ButtonLink href="/contact/" variant="primary">
-            Book a consultation
+            Talk with us
           </ButtonLink>
         </div>
 
@@ -96,7 +98,7 @@ export function SiteHeader() {
                 href={link.href}
                 className={`rounded-lg px-3 py-3 text-base font-medium ${
                   isActive(link.href)
-                    ? "bg-surface-2 text-brand"
+                    ? "bg-surface-2 text-navy"
                     : "text-ink hover:bg-surface-2"
                 }`}
               >
@@ -104,7 +106,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <ButtonLink href="/contact/" variant="primary" className="mt-2">
-              Book a consultation
+              Talk with us
             </ButtonLink>
           </Container>
         </div>

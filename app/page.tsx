@@ -1,203 +1,258 @@
 import Link from "next/link";
+import { HomeHero } from "@/app/components/home-hero";
+import { TestimonialMarquee } from "@/app/components/testimonials";
+import {
+  Reveal,
+  Stagger,
+  StaggerItem,
+  Counter,
+} from "@/app/components/motion";
 import {
   ArrowIcon,
   ButtonLink,
   Container,
   Eyebrow,
+  Marquee,
+  asset,
 } from "@/app/components/ui";
-import { services } from "@/app/content";
+import { services, projects } from "@/app/content";
+
+const featured = projects.slice(0, 4);
 
 export default function HomePage() {
   return (
     <>
-      {/* ---------------------------------------------------------------- Hero */}
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(60% 55% at 15% 0%, color-mix(in oklab, var(--brand) 10%, transparent) 0%, transparent 60%), radial-gradient(50% 45% at 100% 20%, color-mix(in oklab, var(--accent) 12%, transparent) 0%, transparent 55%)",
-          }}
-        />
-        <Container className="pt-20 pb-16 sm:pt-28 sm:pb-24">
-          <div className="max-w-3xl reveal">
-            <Eyebrow>Boston-based energy advisory</Eyebrow>
-            <h1 className="font-display mt-6 text-4xl font-semibold leading-[1.05] text-ink sm:text-6xl">
-              Energy strategy that pays for itself.
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Capital Energy helps organizations cut what they spend on power,
-              hedge against volatile markets, and build a credible path to
-              cleaner energy — without the jargon or the sales pitch.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <ButtonLink href="/contact/" variant="primary">
-                Book a consultation
-                <ArrowIcon />
-              </ButtonLink>
-              <ButtonLink href="/services/" variant="secondary">
-                Explore our services
-              </ButtonLink>
-            </div>
-          </div>
+      <HomeHero />
+
+      {/* -------------------------------------------------- Trusted-by band */}
+      <section className="border-y border-line bg-white/60 py-8">
+        <Container className="mb-6">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+            Trusted by the founders building climate&apos;s future
+          </p>
         </Container>
+        <Marquee duration={38}>
+          {projects.map((p) => (
+            <span
+              key={p.slug}
+              className="font-display mx-8 text-xl font-medium text-navy/45 transition-colors hover:text-navy sm:text-2xl"
+            >
+              {p.name}
+            </span>
+          ))}
+        </Marquee>
       </section>
 
-      {/* ----------------------------------------------------------- Trust bar */}
-      <section className="border-y border-line bg-surface-2/60">
-        <Container className="py-8">
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <div className="font-display text-3xl font-semibold text-brand">
-                  {s.value}
-                </div>
-                <div className="mt-1 text-sm text-muted">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ----------------------------------------------------------- Services */}
+      {/* --------------------------------------------------- Positioning */}
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="max-w-2xl">
-            <Eyebrow>What we do</Eyebrow>
-            <h2 className="font-display mt-5 text-3xl font-semibold text-ink sm:text-4xl">
-              Advisory across the full energy lifecycle
-            </h2>
-            <p className="mt-4 text-lg text-muted">
-              Four practice areas, one integrated team. Engage us for a single
-              project or as your outsourced energy desk.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {services.map((service) => (
-              <Link
-                key={service.slug}
-                href="/services/"
-                className="group flex flex-col rounded-2xl border border-line bg-surface p-8 transition-all duration-200 hover:-translate-y-1 hover:border-brand/30 hover:shadow-lg"
-              >
-                <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand/8 text-brand">
-                  {service.icon}
-                </div>
-                <h3 className="font-display mt-6 text-xl font-semibold text-ink">
-                  {service.title}
-                </h3>
-                <p className="mt-3 flex-1 text-[15px] leading-relaxed text-muted">
-                  {service.summary}
-                </p>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                  Learn more
-                  <ArrowIcon className="transition-transform duration-200 group-hover:translate-x-1" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ------------------------------------------------------------ Approach */}
-      <section className="bg-brand text-white">
-        <Container className="py-20 sm:py-28">
-          <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-            <div>
-              <Eyebrow>Our approach</Eyebrow>
-              <h2 className="font-display mt-5 text-3xl font-semibold sm:text-4xl">
-                Independent, data-driven, and always on your side of the table.
+          <div className="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:gap-16">
+            <Reveal>
+              <Eyebrow>Why we exist</Eyebrow>
+              <h2 className="font-display mt-6 text-3xl font-semibold leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                We bring coherence, confidence, and some much-needed calm to the
+                chaos.
               </h2>
-              <p className="mt-5 text-white/75">
-                We don&apos;t sell energy and we don&apos;t take supplier
-                commissions. Our only incentive is the result we deliver for
-                you — measured in dollars saved and risk removed.
+            </Reveal>
+            <Reveal delay={0.15} className="flex flex-col justify-end">
+              <p className="text-lg leading-relaxed text-muted">
+                Explaining your company&apos;s purpose in a way people can
+                understand and connect with isn&apos;t always second nature for
+                technical teams. The gap between what a founder means and what
+                the market hears is one of the most underestimated risks in
+                climate tech.
               </p>
-              <div className="mt-8">
-                <ButtonLink
-                  href="/about/"
-                  variant="secondary"
-                  className="!bg-white/10 !text-white !ring-white/20 hover:!bg-white/15"
-                >
-                  How we work
-                </ButtonLink>
-              </div>
-            </div>
-
-            <ol className="space-y-8">
-              {approach.map((step, i) => (
-                <li key={step.title} className="flex gap-5">
-                  <span className="font-display grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-lg font-semibold text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-semibold">{step.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-white/70">
-                      {step.body}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+              <p className="mt-4 text-lg leading-relaxed text-muted">
+                We close that gap — turning hard-to-explain innovation into a
+                story that earns trust and moves people to act.
+              </p>
+            </Reveal>
           </div>
+
+          {/* Stat row */}
+          <Stagger className="mt-16 grid grid-cols-2 gap-8 border-t border-line pt-10 sm:grid-cols-4">
+            {[
+              { n: 12, suffix: "+", label: "Ventures & missions" },
+              { n: 100, suffix: "%", label: "Climate & energy focused" },
+              { n: 6, suffix: "", label: "Founder testimonials" },
+              { n: 1, suffix: "", label: "Partner in your corner", plain: "Somerville, MA" },
+            ].map((s) => (
+              <StaggerItem key={s.label}>
+                <div className="font-display text-4xl font-semibold text-navy sm:text-5xl">
+                  {s.plain ? (
+                    <span className="text-2xl sm:text-3xl">{s.plain}</span>
+                  ) : (
+                    <Counter to={s.n} suffix={s.suffix} />
+                  )}
+                </div>
+                <div className="mt-2 text-sm text-muted">{s.label}</div>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </Container>
       </section>
 
-      {/* ---------------------------------------------------------------- CTA */}
-      <section className="py-20 sm:py-28">
+      {/* ------------------------------------------------------- Services */}
+      <section className="bg-surface-2/50 py-20 sm:py-28">
         <Container>
-          <div className="relative overflow-hidden rounded-3xl border border-line bg-surface px-8 py-14 text-center sm:px-16">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10"
-              style={{
-                background:
-                  "radial-gradient(50% 120% at 50% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 70%)",
-              }}
-            />
-            <h2 className="font-display mx-auto max-w-2xl text-3xl font-semibold text-ink sm:text-4xl">
-              Let&apos;s find the savings hiding in your energy spend.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
-              A 30-minute consultation is free, and you&apos;ll leave with at
-              least one concrete idea to act on.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <ButtonLink href="/contact/" variant="primary">
-                Book a consultation
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <Reveal>
+                <Eyebrow>What we do</Eyebrow>
+                <h2 className="font-display mt-6 text-3xl font-semibold text-ink sm:text-4xl">
+                  Helping you share why the work matters — not just how it works.
+                </h2>
+              </Reveal>
+            </div>
+            <Reveal delay={0.1}>
+              <ButtonLink href="/services/" variant="secondary">
+                Explore services
                 <ArrowIcon />
               </ButtonLink>
-            </div>
+            </Reveal>
           </div>
+
+          <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
+            {services.map((s) => (
+              <StaggerItem key={s.slug} className="h-full">
+                <Link
+                  href="/services/"
+                  className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-steel/40 hover:shadow-xl hover:shadow-navy/5"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grid h-12 w-12 place-items-center rounded-xl bg-navy/6 text-navy transition-colors group-hover:bg-navy group-hover:text-white">
+                      {s.icon}
+                    </div>
+                    <span className="font-display text-sm font-semibold text-steel/60">
+                      {s.index}
+                    </span>
+                  </div>
+                  <h3 className="font-display mt-6 text-xl font-semibold text-ink">
+                    {s.title}
+                  </h3>
+                  <p className="mt-1 text-sm font-medium text-accent-600">
+                    {s.tagline}
+                  </p>
+                  <p className="mt-3 flex-1 text-[15px] leading-relaxed text-muted">
+                    {s.summary}
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy">
+                    Learn more
+                    <ArrowIcon className="transition-transform duration-200 group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Container>
+      </section>
+
+      {/* ---------------------------------------------------- Featured work */}
+      <section className="py-20 sm:py-28">
+        <Container>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <Reveal>
+                <Eyebrow>Selected work</Eyebrow>
+                <h2 className="font-display mt-6 text-3xl font-semibold text-ink sm:text-4xl">
+                  Stories we&apos;re proud to have shaped.
+                </h2>
+              </Reveal>
+            </div>
+            <Reveal delay={0.1}>
+              <ButtonLink href="/work/" variant="secondary">
+                View all work
+                <ArrowIcon />
+              </ButtonLink>
+            </Reveal>
+          </div>
+
+          <Stagger className="mt-14 grid gap-6 sm:grid-cols-2">
+            {featured.map((p) => (
+              <StaggerItem key={p.slug}>
+                <Link
+                  href="/work/"
+                  className="group block overflow-hidden rounded-2xl border border-line bg-surface"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={asset(p.image)}
+                      alt={p.name}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/10 to-transparent opacity-90" />
+                    <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy backdrop-blur">
+                      {p.sector}
+                    </span>
+                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-5">
+                      <div>
+                        <h3 className="font-display text-xl font-semibold text-white">
+                          {p.name}
+                        </h3>
+                        <p className="text-sm text-white/75">{p.work}</p>
+                      </div>
+                      <span className="grid h-10 w-10 place-items-center rounded-full bg-accent text-navy-900 opacity-0 transition-all duration-300 group-hover:opacity-100">
+                        <ArrowIcon />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Container>
+      </section>
+
+      {/* ------------------------------------------------------ Testimonials */}
+      <section className="overflow-hidden py-20 sm:py-28">
+        <Container className="mb-12">
+          <Reveal>
+            <Eyebrow>Kind words</Eyebrow>
+            <h2 className="font-display mt-6 max-w-2xl text-3xl font-semibold text-ink sm:text-4xl">
+              Founders and leaders who trusted us with their story.
+            </h2>
+          </Reveal>
+        </Container>
+        <TestimonialMarquee />
+      </section>
+
+      {/* --------------------------------------------------- Insights teaser */}
+      <section className="pb-20 sm:pb-28">
+        <Container>
+          <Reveal>
+            <div className="relative overflow-hidden rounded-3xl bg-navy-900 px-8 py-14 sm:px-14 sm:py-16">
+              <div
+                aria-hidden
+                className="animate-drift-slow absolute -right-16 -top-16 h-72 w-72 rounded-full bg-accent/20 blur-3xl"
+              />
+              <div
+                aria-hidden
+                className="animate-drift absolute -bottom-20 left-10 h-72 w-72 rounded-full bg-steel/25 blur-3xl"
+              />
+              <div className="relative grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+                <div>
+                  <Eyebrow tone="light">CapEnergy Insights · Beta</Eyebrow>
+                  <h2 className="font-display mt-5 text-3xl font-semibold text-white sm:text-4xl">
+                    See your brand the way the market actually reads it.
+                  </h2>
+                  <p className="mt-4 max-w-xl text-white/70">
+                    Our messaging-intelligence reports surface the contradictions
+                    and credibility gaps between what you mean and what investors
+                    and customers hear — fast, repeatable, and built to scale.
+                  </p>
+                </div>
+                <div className="flex md:justify-end">
+                  <ButtonLink href="/insights/" variant="light">
+                    Join the beta
+                    <ArrowIcon className="transition-transform duration-200 group-hover/btn:translate-x-1" />
+                  </ButtonLink>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </Container>
       </section>
     </>
   );
 }
-
-const stats = [
-  { value: "$40M+", label: "Energy spend under advisory" },
-  { value: "12%", label: "Average cost reduction" },
-  { value: "150+", label: "Contracts negotiated" },
-  { value: "20 yrs", label: "In energy markets" },
-];
-
-const approach = [
-  {
-    title: "Understand your load",
-    body: "We start with your actual usage data, contracts, and goals — not a template. Every recommendation is grounded in your numbers.",
-  },
-  {
-    title: "Model the market",
-    body: "We benchmark suppliers, timing, and structures against live market data to find the options worth pursuing.",
-  },
-  {
-    title: "Negotiate and execute",
-    body: "We run the process end to end, put suppliers in competition, and hand you a clean, defensible decision.",
-  },
-  {
-    title: "Manage the risk",
-    body: "Markets move. We monitor your position and flag when it’s time to act, so you’re never caught off guard.",
-  },
-];

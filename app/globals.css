@@ -1,25 +1,30 @@
 @import "tailwindcss";
 
 /*
-  Capital Energy design tokens.
-  Palette: deep petrol navy (trust/energy), warm signal amber (accent),
-  soft paper background, refined neutrals. Serif display + clean sans body.
+  Capital Energy — design tokens.
+  Palette derived from the logo: deep navy + steel blue, with a mint "energy"
+  accent for climate-tech freshness. Cool, clean, confident.
 */
 :root {
-  --background: #fbfaf8;
-  --foreground: #14201f;
+  --background: #f6f8fb;
+  --foreground: #0b2440;
 
-  --ink: #14201f; /* primary text */
-  --muted: #566664; /* secondary text */
-  --line: #e6e2da; /* hairline borders */
+  --ink: #0b2440; /* headings / primary text */
+  --muted: #566a82; /* body / secondary text */
+  --line: #dbe3ec; /* hairline borders */
   --surface: #ffffff; /* cards / panels */
-  --surface-2: #f2efe9; /* alt sections */
+  --surface-2: #eef2f7; /* alt sections */
 
-  --brand: #0d3b3a; /* deep petrol */
-  --brand-600: #12504e;
-  --brand-700: #0a2e2d;
-  --accent: #d98a2b; /* warm amber */
-  --accent-600: #c2761c;
+  --navy: #0a2c52; /* primary brand */
+  --navy-700: #0e3966;
+  --navy-900: #071b33; /* darkest, for dark sections */
+  --steel: #4e7ca4; /* secondary brand (logo peak) */
+  --steel-400: #6f98bd;
+  --steel-200: #b8ccdf;
+
+  --accent: #17cf9a; /* mint energy */
+  --accent-600: #0ea87c; /* accent text on light */
+  --accent-300: #7fe6c8;
 }
 
 @theme inline {
@@ -30,14 +35,22 @@
   --color-line: var(--line);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
-  --color-brand: var(--brand);
-  --color-brand-600: var(--brand-600);
-  --color-brand-700: var(--brand-700);
+  --color-navy: var(--navy);
+  --color-navy-700: var(--navy-700);
+  --color-navy-900: var(--navy-900);
+  --color-steel: var(--steel);
+  --color-steel-400: var(--steel-400);
+  --color-steel-200: var(--steel-200);
   --color-accent: var(--accent);
   --color-accent-600: var(--accent-600);
+  --color-accent-300: var(--accent-300);
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+  --font-display: var(--font-display), var(--font-sans), sans-serif;
+}
+
+* {
+  border-color: var(--line);
 }
 
 body {
@@ -46,32 +59,99 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Utility: fluid display type using the serif */
 .font-display {
-  font-family: var(--font-serif);
-  font-optical-sizing: auto;
-  letter-spacing: -0.01em;
-}
-
-/* Subtle section reveal on scroll (progressive enhancement) */
-@media (prefers-reduced-motion: no-preference) {
-  .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: reveal-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  @keyframes reveal-in {
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 600;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  background: color-mix(in oklab, var(--accent) 35%, transparent);
+  color: var(--ink);
 }
 
 a {
   text-underline-offset: 3px;
+}
+
+/* --------------------------------------------------------- Motion utilities */
+
+/* Slow drifting gradient mesh for hero backgrounds. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -3%, 0) scale(1.08);
+  }
+}
+.animate-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+.animate-drift-slow {
+  animation: drift 26s ease-in-out infinite reverse;
+}
+
+/* Infinite horizontal marquee. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+/* Subtle vertical float for accent shapes. */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+/* Animated conic ring (energy motif). */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift,
+  .animate-drift-slow,
+  .animate-marquee,
+  .animate-float,
+  .animate-spin-slow {
+    animation: none !important;
+  }
 }

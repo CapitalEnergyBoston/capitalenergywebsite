@@ -1,37 +1,37 @@
 import Link from "next/link";
+import { asset } from "@/app/components/ui";
 
-/** Wordmark + monogram. Uses currentColor so it adapts to light/dark backgrounds. */
+/**
+ * Real Capital Energy wordmark (navy + steel mountain/energy mark).
+ * The source PNG is navy on transparent; on dark surfaces we flip it to solid
+ * white with a filter so it stays legible.
+ */
 export function Logo({
   className = "",
-  tone = "ink",
+  tone = "dark",
+  priority = false,
 }: {
   className?: string;
-  tone?: "ink" | "light";
+  tone?: "dark" | "light";
+  priority?: boolean;
 }) {
-  const textColor = tone === "light" ? "text-white" : "text-ink";
   return (
     <Link
       href="/"
       aria-label="Capital Energy — home"
-      className={`group inline-flex items-center gap-2.5 ${className}`}
+      className={`inline-flex items-center transition-opacity hover:opacity-80 ${className}`}
     >
-      <span
-        className="grid h-9 w-9 place-items-center rounded-lg bg-brand text-white shadow-sm transition-transform duration-200 group-hover:-translate-y-0.5"
-        aria-hidden
-      >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-          <path
-            d="M13 2 4 13.5h6L9 22l11-13h-6l-1-7Z"
-            fill="var(--accent)"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-      <span className={`font-display text-lg font-semibold ${textColor}`}>
-        Capital&nbsp;Energy
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={asset("/brand/logo-stack.png")}
+        alt="Capital Energy"
+        width={340}
+        height={150}
+        loading={priority ? "eager" : "lazy"}
+        className={`h-10 w-auto sm:h-11 ${
+          tone === "light" ? "[filter:brightness(0)_invert(1)]" : ""
+        }`}
+      />
     </Link>
   );
 }

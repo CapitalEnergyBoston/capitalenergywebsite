@@ -22,26 +22,37 @@ export function Container({
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
+export function Eyebrow({
+  children,
+  tone = "dark",
+}: {
+  children: ReactNode;
+  tone?: "dark" | "light";
+}) {
+  const color = tone === "light" ? "text-accent-300" : "text-accent-600";
   return (
-    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent-600">
-      <span className="h-px w-6 bg-accent-600/60" aria-hidden />
+    <span
+      className={`inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] ${color}`}
+    >
+      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
       {children}
     </span>
   );
 }
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "light";
 
 const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-full text-sm font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 disabled:opacity-50";
+  "group/btn inline-flex items-center justify-center gap-2 rounded-full text-sm font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand px-6 py-3 text-white shadow-sm hover:bg-brand-600 hover:shadow-md",
+    "bg-navy px-6 py-3 text-white shadow-sm hover:bg-navy-700 hover:shadow-md hover:shadow-navy/10",
   secondary:
-    "bg-white px-6 py-3 text-ink ring-1 ring-line hover:ring-brand hover:text-brand",
-  ghost: "px-2 py-1 text-ink hover:text-brand",
+    "bg-white px-6 py-3 text-ink ring-1 ring-line hover:ring-navy hover:text-navy",
+  light:
+    "bg-white/10 px-6 py-3 text-white ring-1 ring-white/20 backdrop-blur hover:bg-white/15",
+  ghost: "px-2 py-1 text-ink hover:text-navy",
 };
 
 export function ButtonLink({
@@ -83,5 +94,33 @@ export function ArrowIcon({ className = "" }: { className?: string }) {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+/**
+ * Infinite marquee. Renders children twice and translates -50% so the loop is
+ * seamless. Pure CSS animation (see .animate-marquee in globals.css).
+ */
+export function Marquee({
+  children,
+  duration = 40,
+  className = "",
+}: {
+  children: ReactNode;
+  duration?: number;
+  className?: string;
+}) {
+  return (
+    <div className={`marquee-mask overflow-hidden ${className}`}>
+      <div
+        className="animate-marquee flex w-max items-center hover:[animation-play-state:paused]"
+        style={{ ["--marquee-duration" as string]: `${duration}s` }}
+      >
+        <div className="flex shrink-0 items-center">{children}</div>
+        <div className="flex shrink-0 items-center" aria-hidden>
+          {children}
+        </div>
+      </div>
+    </div>
   );
 }

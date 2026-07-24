@@ -22,7 +22,7 @@ const FORM_ID = process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID;
 type Status = "idle" | "submitting" | "success" | "error";
 
 const fieldClass =
-  "w-full rounded-xl border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/60 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/15";
+  "w-full rounded-xl border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/60 outline-none transition focus:border-navy focus:ring-2 focus:ring-navy/15";
 const labelClass = "mb-1.5 block text-sm font-medium text-ink";
 
 export function ContactForm() {
@@ -74,7 +74,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="rounded-2xl border border-line bg-surface p-10 text-center">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand/10 text-brand">
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-accent/15 text-accent-600">
           <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none">
             <path
               d="m5 13 4 4L19 7"
@@ -89,13 +89,13 @@ export function ContactForm() {
           Thanks — we&apos;ll be in touch.
         </h3>
         <p className="mx-auto mt-2 max-w-sm text-muted">
-          A Capital Energy advisor will reach out within one business day to set
-          up your consultation.
+          Someone from Capital Energy will get back to you within one business
+          day to find a time to talk.
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 text-sm font-semibold text-brand hover:text-brand-600"
+          className="mt-6 text-sm font-semibold text-navy hover:text-accent-600"
         >
           Send another message
         </button>
@@ -184,7 +184,7 @@ export function ContactForm() {
             rows={4}
             required
             className={`${fieldClass} resize-y`}
-            placeholder="Tell us a bit about your energy spend, sites, or goals…"
+            placeholder="Tell us about your company, stage, and what you're trying to say…"
           />
         </div>
       </div>
@@ -192,8 +192,8 @@ export function ContactForm() {
       {status === "error" && (
         <p className="mt-4 text-sm text-red-600">
           Something went wrong sending your message. Please email us directly at{" "}
-          <a href="mailto:hello@capitalenergy.com" className="underline">
-            hello@capitalenergy.com
+          <a href="mailto:ted@capitalenergy.io" className="underline">
+            ted@capitalenergy.io
           </a>
           .
         </p>
@@ -202,7 +202,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600 disabled:opacity-60 sm:w-auto"
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-navy-700 disabled:opacity-60 sm:w-auto"
       >
         {status === "submitting" ? "Sending…" : "Send message"}
         {status !== "submitting" && <ArrowIcon />}
