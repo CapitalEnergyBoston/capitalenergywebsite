@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useEffect, type SVGProps } from "react";
+import { motion } from "motion/react";
+import { type SVGProps } from "react";
 import { ArrowIcon, ButtonLink, Container } from "@/app/components/ui";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -16,26 +16,9 @@ const container = {
 };
 
 export function HomeHero() {
-  // Pointer position, normalized to [-1, 1], smoothed — drives the parallax.
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 60, damping: 18 });
-  const sy = useSpring(py, { stiffness: 60, damping: 18 });
-
-  useEffect(() => {
-    const onMove = (e: PointerEvent) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = (e.clientY / window.innerHeight) * 2 - 1;
-      px.set(x);
-      py.set(y);
-    };
-    window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [px, py]);
-
   return (
     <section className="relative overflow-hidden">
-      <HeroBackdrop sx={sx} sy={sy} />
+      <HeroBackdrop />
 
       <Container className="relative pt-20 pb-20 sm:pt-28 sm:pb-28">
         <motion.div
@@ -59,10 +42,6 @@ export function HomeHero() {
             Building from scratch
             <br className="hidden sm:block" /> or{" "}
             <span className="relative whitespace-nowrap text-navy">
-              <span
-                aria-hidden
-                className="absolute -inset-x-3 -inset-y-1 -z-10 rounded-2xl bg-accent/25 blur-2xl"
-              />
               scaling fast
               <AccentUnderline />
             </span>
@@ -119,108 +98,74 @@ function AccentUnderline() {
   );
 }
 
-type MV = ReturnType<typeof useSpring>;
-
-/** Animated ambient backdrop: parallax color blobs + an energy-line motif. */
-function HeroBackdrop({ sx, sy }: { sx: MV; sy: MV }) {
-  // Different depths move by different amounts for a layered parallax feel.
-  const b1x = useTransform(sx, (v) => v * -28);
-  const b1y = useTransform(sy, (v) => v * -22);
-  const b2x = useTransform(sx, (v) => v * 34);
-  const b2y = useTransform(sy, (v) => v * 26);
-  const b3x = useTransform(sx, (v) => v * 18);
-  const b3y = useTransform(sy, (v) => v * -16);
-
+/**
+ * Calm ambient backdrop: a clean light wash with a single soft, slowly rotating
+ * color sheen and one gently breathing glow. Cohesive cool tones, low opacity —
+ * movement you notice only if you look for it. Plus a faint scrolling ticker.
+ */
+function HeroBackdrop() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-      {/* Base wash — deeper at the edges for contrast */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-background to-surface-2" />
+      {/* Clean base wash */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-background to-background" />
 
-      {/* Parallax color blobs */}
-      <motion.div
-        style={{ x: b1x, y: b1y }}
-        className="animate-drift absolute -left-24 -top-24 h-96 w-96 rounded-full bg-steel/35 blur-3xl"
-      />
-      <motion.div
-        style={{ x: b2x, y: b2y }}
-        className="animate-drift-slow absolute right-[-6rem] top-6 h-[28rem] w-[28rem] rounded-full bg-accent/30 blur-3xl"
-      />
-      <motion.div
-        style={{ x: b3x, y: b3y }}
-        className="animate-float absolute bottom-[-7rem] left-1/3 h-80 w-80 rounded-full bg-navy/15 blur-3xl"
-      />
+      {/* Soft, slowly rotating light sheen — the main subtle motion */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="animate-spin-slow absolute left-1/2 top-[-20%] h-[120vw] w-[120vw] -translate-x-1/2 opacity-90"
+          style={{
+            background:
+              "conic-gradient(from 90deg, transparent 0deg, color-mix(in oklab, var(--steel) 42%, transparent) 55deg, transparent 125deg, color-mix(in oklab, var(--accent) 22%, transparent) 205deg, transparent 275deg, color-mix(in oklab, var(--navy) 24%, transparent) 325deg, transparent 360deg)",
+            filter: "blur(64px)",
+            WebkitMaskImage:
+              "radial-gradient(closest-side, #000 35%, transparent 72%)",
+            maskImage:
+              "radial-gradient(closest-side, #000 35%, transparent 72%)",
+          }}
+        />
+      </div>
 
-      {/* Faint dot grid */}
-      <div
-        className="absolute inset-0 opacity-[0.5]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at center, color-mix(in oklab, var(--navy) 14%, transparent) 1px, transparent 1px)",
-          backgroundSize: "26px 26px",
-          maskImage:
-            "radial-gradient(72% 62% at 50% 40%, #000 0%, transparent 78%)",
-          WebkitMaskImage:
-            "radial-gradient(72% 62% at 50% 40%, #000 0%, transparent 78%)",
-        }}
-      />
+      {/* One gently breathing steel glow, low and soft */}
+      <div className="animate-drift absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-steel/18 blur-3xl" />
 
-      {/* Energy ticker motif (echoes the logo) — scrolls forever, top-right.
-          Parallax lives on the outer motion.div; rotation on an inner wrapper so
-          Motion's transform doesn't clobber it; the marquee animation on the
-          innermost track that holds two identical copies for a seamless loop. */}
-      <motion.div
-        style={{ x: b3x, y: b3y }}
-        className="absolute -right-10 top-8 w-[48rem] max-w-[90%]"
-      >
-        <div className="-rotate-[7deg]">
-          <div className="marquee-mask overflow-hidden">
-            <div
-              className="animate-marquee flex w-max text-steel/45"
-              style={{ ["--marquee-duration" as string]: "20s" }}
-            >
-              <TickerLine />
-              <TickerLine aria-hidden />
-            </div>
+      {/* Faint scrolling ticker motif — a quiet nod to the logo */}
+      <div className="absolute right-[-6%] top-10 w-[46rem] max-w-[80%] -rotate-[6deg] opacity-60">
+        <div className="marquee-mask overflow-hidden">
+          <div
+            className="animate-marquee flex w-max text-steel/35"
+            style={{ ["--marquee-duration" as string]: "26s" }}
+          >
+            <TickerLine />
+            <TickerLine aria-hidden />
           </div>
         </div>
-      </motion.div>
+      </div>
+
+      {/* Bottom fade into the page */}
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
     </div>
   );
 }
 
-// A seamlessly tiling jagged "market ticker" segment: it starts and ends at the
-// same height so copies laid end-to-end scroll without a visible seam.
+// Seamlessly tiling jagged "ticker" segment (same y at both ends so copies loop).
 const TICKER_PATH =
   "M0 70 L30 52 L55 63 L90 32 L120 50 L150 26 L185 52 L215 30 L250 58 L275 40 L300 70";
-const TICKER_DOTS = [
-  [90, 32],
-  [150, 26],
-  [215, 30],
-];
 
-function TickerLine({
-  className = "",
-  ...rest
-}: {
-  className?: string;
-} & SVGProps<SVGSVGElement>) {
+function TickerLine({ className = "", ...rest }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 300 100"
-      className={`h-28 w-[300px] shrink-0 sm:h-32 ${className}`}
+      className={`h-24 w-[300px] shrink-0 sm:h-28 ${className}`}
       fill="none"
       {...rest}
     >
       <path
         d={TICKER_PATH}
         stroke="currentColor"
-        strokeWidth="2.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {TICKER_DOTS.map(([cx, cy]) => (
-        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3.5" className="fill-accent" />
-      ))}
     </svg>
   );
 }
