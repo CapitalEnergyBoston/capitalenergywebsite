@@ -25,7 +25,7 @@ export default function HomePage() {
       <HomeHero />
 
       {/* -------------------------------------------------- Trusted-by band */}
-      <section className="border-y border-line bg-white/60 py-8">
+      <section className="border-y border-line bg-surface py-8 shadow-soft">
         <Container className="mb-6">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-muted">
             Trusted by the founders building climate&apos;s future
@@ -117,7 +117,7 @@ export default function HomePage() {
               <StaggerItem key={s.slug} className="h-full">
                 <Link
                   href="/services/"
-                  className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-steel/40 hover:shadow-xl hover:shadow-navy/5"
+                  className="card-hover shadow-soft group flex h-full flex-col rounded-2xl border border-line bg-surface p-8"
                 >
                   <div className="flex items-center justify-between">
                     <div className="grid h-12 w-12 place-items-center rounded-xl bg-navy/6 text-navy transition-colors group-hover:bg-navy group-hover:text-white">
@@ -172,7 +172,7 @@ export default function HomePage() {
               <StaggerItem key={p.slug}>
                 <Link
                   href="/work/"
-                  className="group block overflow-hidden rounded-2xl border border-line bg-surface"
+                  className="card-hover shadow-soft group block overflow-hidden rounded-2xl border border-line bg-surface"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -205,11 +205,15 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------ Testimonials */}
-      <section className="overflow-hidden py-20 sm:py-28">
-        <Container className="mb-12">
+      <section className="aurora relative overflow-hidden py-20 text-white sm:py-28">
+        <div
+          aria-hidden
+          className="animate-drift-slow pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-accent/20 blur-3xl"
+        />
+        <Container className="relative mb-12">
           <Reveal>
-            <Eyebrow>Kind words</Eyebrow>
-            <h2 className="font-display mt-6 max-w-2xl text-3xl font-semibold text-ink sm:text-4xl">
+            <Eyebrow tone="light">Kind words</Eyebrow>
+            <h2 className="font-display mt-6 max-w-2xl text-3xl font-semibold sm:text-4xl">
               Founders and leaders who trusted us with their story.
             </h2>
           </Reveal>
@@ -218,32 +222,36 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------------------------------- Insights teaser */}
-      <section className="pb-20 sm:pb-28">
+      <section className="py-20 sm:py-28">
         <Container>
           <Reveal>
-            <div className="relative overflow-hidden rounded-3xl bg-navy-900 px-8 py-14 sm:px-14 sm:py-16">
+            <div className="shadow-soft relative overflow-hidden rounded-3xl border border-line bg-surface px-8 py-14 sm:px-14 sm:py-16">
               <div
                 aria-hidden
-                className="animate-drift-slow absolute -right-16 -top-16 h-72 w-72 rounded-full bg-accent/20 blur-3xl"
+                className="animate-drift-slow absolute -right-20 -top-20 h-80 w-80 rounded-full bg-accent/25 blur-3xl"
               />
               <div
                 aria-hidden
-                className="animate-drift absolute -bottom-20 left-10 h-72 w-72 rounded-full bg-steel/25 blur-3xl"
+                className="animate-float absolute -bottom-24 left-1/4 h-72 w-72 rounded-full bg-steel/15 blur-3xl"
+              />
+              <span
+                aria-hidden
+                className="accent-bar absolute inset-x-0 top-0 h-1"
               />
               <div className="relative grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-center">
                 <div>
-                  <Eyebrow tone="light">CapEnergy Insights · Beta</Eyebrow>
-                  <h2 className="font-display mt-5 text-3xl font-semibold text-white sm:text-4xl">
+                  <Eyebrow>CapEnergy Insights · Beta</Eyebrow>
+                  <h2 className="font-display mt-5 text-3xl font-semibold text-ink sm:text-4xl">
                     See your brand the way the market actually reads it.
                   </h2>
-                  <p className="mt-4 max-w-xl text-white/70">
+                  <p className="mt-4 max-w-xl text-muted">
                     Our messaging-intelligence reports surface the contradictions
                     and credibility gaps between what you mean and what investors
                     and customers hear — fast, repeatable, and built to scale.
                   </p>
                 </div>
                 <div className="flex md:justify-end">
-                  <ButtonLink href="/insights/" variant="light">
+                  <ButtonLink href="/insights/" variant="primary">
                     Join the beta
                     <ArrowIcon className="transition-transform duration-200 group-hover/btn:translate-x-1" />
                   </ButtonLink>

@@ -91,7 +91,7 @@ export default function AboutPage() {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <aside className="rounded-3xl border border-line bg-surface p-8">
+              <aside className="shadow-soft rounded-3xl border border-line bg-surface p-8">
                 <h3 className="font-display text-lg font-semibold text-ink">
                   At a glance
                 </h3>
@@ -137,7 +137,7 @@ export default function AboutPage() {
           <Stagger className="mt-12 grid gap-6 sm:grid-cols-2">
             {values.map((v) => (
               <StaggerItem key={v.title}>
-                <div className="h-full rounded-2xl border border-line bg-surface p-8">
+                <div className="card-hover shadow-soft h-full rounded-2xl border border-line bg-surface p-8">
                   <h3 className="font-display text-xl font-semibold text-ink">
                     {v.title}
                   </h3>

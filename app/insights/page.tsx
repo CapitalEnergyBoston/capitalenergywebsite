@@ -41,7 +41,7 @@ export default function InsightsPage() {
   return (
     <>
       {/* Dark hero */}
-      <section className="relative overflow-hidden bg-navy-900 text-white">
+      <section className="aurora relative overflow-hidden text-white">
         <div
           aria-hidden
           className="animate-drift pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-steel/30 blur-3xl"
@@ -92,7 +92,7 @@ export default function InsightsPage() {
           <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
             {modules.map((m, i) => (
               <StaggerItem key={m.title} className="h-full">
-                <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-8">
+                <div className="card-hover shadow-soft flex h-full flex-col rounded-2xl border border-line bg-surface p-8">
                   <span className="font-display text-sm font-semibold text-steel/50">
                     0{i + 1}
                   </span>

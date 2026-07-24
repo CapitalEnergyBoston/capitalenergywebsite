@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/app/components/site-header";
 import { SiteFooter } from "@/app/components/site-footer";
+import { ScrollProgress } from "@/app/components/scroll-progress";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <ScrollProgress />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

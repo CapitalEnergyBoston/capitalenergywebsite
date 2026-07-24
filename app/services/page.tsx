@@ -69,7 +69,7 @@ export default function ServicesPage() {
               <Reveal key={s.slug} delay={i * 0.05}>
                 <article
                   id={s.slug}
-                  className="grid scroll-mt-24 gap-8 rounded-3xl border border-line bg-surface p-8 sm:p-12 md:grid-cols-[1fr_1.3fr] md:gap-12"
+                  className="shadow-soft grid scroll-mt-24 gap-8 rounded-3xl border border-line bg-surface p-8 sm:p-12 md:grid-cols-[1fr_1.3fr] md:gap-12"
                 >
                   <div>
                     <div className="flex items-center gap-4">

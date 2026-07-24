@@ -106,7 +106,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-line bg-surface p-6 sm:p-8"
+      className="shadow-soft rounded-2xl border border-line bg-surface p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>

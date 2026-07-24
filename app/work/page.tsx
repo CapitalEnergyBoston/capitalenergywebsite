@@ -41,7 +41,7 @@ export default function WorkPage() {
           <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((p) => (
               <StaggerItem key={p.slug}>
-                <article className="group relative overflow-hidden rounded-2xl border border-line bg-surface">
+                <article className="card-hover shadow-soft group relative overflow-hidden rounded-2xl border border-line bg-surface">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
