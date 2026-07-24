@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, type SVGProps } from "react";
 import { ArrowIcon, ButtonLink, Container } from "@/app/components/ui";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -164,24 +164,63 @@ function HeroBackdrop({ sx, sy }: { sx: MV; sy: MV }) {
         }}
       />
 
-      {/* Energy line motif (echoes the logo), top-right */}
-      <motion.svg
-        viewBox="0 0 400 200"
-        className="absolute right-0 top-0 h-64 w-[36rem] max-w-[70%] text-steel/50"
-        fill="none"
+      {/* Energy ticker motif (echoes the logo) — scrolls forever, top-right.
+          Parallax lives on the outer motion.div; rotation on an inner wrapper so
+          Motion's transform doesn't clobber it; the marquee animation on the
+          innermost track that holds two identical copies for a seamless loop. */}
+      <motion.div
         style={{ x: b3x, y: b3y }}
+        className="absolute -right-10 top-8 w-[48rem] max-w-[90%]"
       >
-        <motion.path
-          d="M10 150 L90 110 L120 130 L200 60 L240 90 L330 20 L390 45"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, ease: easeOut, delay: 0.4 }}
-        />
-      </motion.svg>
+        <div className="-rotate-[7deg]">
+          <div className="marquee-mask overflow-hidden">
+            <div
+              className="animate-marquee flex w-max text-steel/45"
+              style={{ ["--marquee-duration" as string]: "20s" }}
+            >
+              <TickerLine />
+              <TickerLine aria-hidden />
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </div>
+  );
+}
+
+// A seamlessly tiling jagged "market ticker" segment: it starts and ends at the
+// same height so copies laid end-to-end scroll without a visible seam.
+const TICKER_PATH =
+  "M0 70 L30 52 L55 63 L90 32 L120 50 L150 26 L185 52 L215 30 L250 58 L275 40 L300 70";
+const TICKER_DOTS = [
+  [90, 32],
+  [150, 26],
+  [215, 30],
+];
+
+function TickerLine({
+  className = "",
+  ...rest
+}: {
+  className?: string;
+} & SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 300 100"
+      className={`h-28 w-[300px] shrink-0 sm:h-32 ${className}`}
+      fill="none"
+      {...rest}
+    >
+      <path
+        d={TICKER_PATH}
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {TICKER_DOTS.map(([cx, cy]) => (
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3.5" className="fill-accent" />
+      ))}
+    </svg>
   );
 }
