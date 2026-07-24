@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/*
+  Capital Energy design tokens.
+  Palette: deep petrol navy (trust/energy), warm signal amber (accent),
+  soft paper background, refined neutrals. Serif display + clean sans body.
+*/
+:root {
+  --background: #fbfaf8;
+  --foreground: #14201f;
+
+  --ink: #14201f; /* primary text */
+  --muted: #566664; /* secondary text */
+  --line: #e6e2da; /* hairline borders */
+  --surface: #ffffff; /* cards / panels */
+  --surface-2: #f2efe9; /* alt sections */
+
+  --brand: #0d3b3a; /* deep petrol */
+  --brand-600: #12504e;
+  --brand-700: #0a2e2d;
+  --accent: #d98a2b; /* warm amber */
+  --accent-600: #c2761c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-brand: var(--brand);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-accent: var(--accent);
+  --color-accent-600: var(--accent-600);
+
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Utility: fluid display type using the serif */
+.font-display {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle section reveal on scroll (progressive enhancement) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: reveal-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes reveal-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+a {
+  text-underline-offset: 3px;
+}
