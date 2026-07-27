@@ -99,9 +99,10 @@ function AccentUnderline() {
 }
 
 /**
- * Calm ambient backdrop: a clean light wash with a single soft, slowly rotating
- * color sheen and one gently breathing glow. Cohesive cool tones, low opacity —
- * movement you notice only if you look for it. Plus a faint scrolling ticker.
+ * Calm ambient backdrop: a clean light wash with two soft, slowly drifting
+ * glows in cohesive cool tones and one faint mint accent. Movement is
+ * transform-based (compositor-friendly) so it stays smooth. Plus a faint
+ * scrolling ticker — a quiet nod to the logo.
  */
 function HeroBackdrop() {
   return (
@@ -109,24 +110,11 @@ function HeroBackdrop() {
       {/* Clean base wash */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-background to-background" />
 
-      {/* Soft, slowly rotating light sheen — the main subtle motion */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="animate-spin-slow absolute left-1/2 top-[-20%] h-[120vw] w-[120vw] -translate-x-1/2 opacity-90"
-          style={{
-            background:
-              "conic-gradient(from 90deg, transparent 0deg, color-mix(in oklab, var(--steel) 42%, transparent) 55deg, transparent 125deg, color-mix(in oklab, var(--accent) 22%, transparent) 205deg, transparent 275deg, color-mix(in oklab, var(--navy) 24%, transparent) 325deg, transparent 360deg)",
-            filter: "blur(64px)",
-            WebkitMaskImage:
-              "radial-gradient(closest-side, #000 35%, transparent 72%)",
-            maskImage:
-              "radial-gradient(closest-side, #000 35%, transparent 72%)",
-          }}
-        />
-      </div>
-
-      {/* One gently breathing steel glow, low and soft */}
-      <div className="animate-drift absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-steel/18 blur-3xl" />
+      {/* Two soft, slowly drifting cool glows — the main subtle motion */}
+      <div className="animate-drift absolute -left-28 top-1/4 h-[30rem] w-[30rem] rounded-full bg-steel/18 blur-3xl" />
+      <div className="animate-drift-slow absolute right-[-8rem] top-4 h-[26rem] w-[26rem] rounded-full bg-navy/12 blur-3xl" />
+      {/* A whisper of mint, kept small and low so it never dominates */}
+      <div className="animate-float absolute left-[42%] top-1/3 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
 
       {/* Faint scrolling ticker motif — a quiet nod to the logo */}
       <div className="absolute right-[-6%] top-10 w-[46rem] max-w-[80%] -rotate-[6deg] opacity-60">

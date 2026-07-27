@@ -120,8 +120,15 @@ export function Counter({
   }, [spring, prefix, suffix]);
 
   return (
-    <span ref={ref} className={className}>
-      {prefix}0{suffix}
+    <span className={className}>
+      <span ref={ref} aria-hidden="true">
+        {prefix}0{suffix}
+      </span>
+      <span className="sr-only">
+        {prefix}
+        {to}
+        {suffix}
+      </span>
     </span>
   );
 }

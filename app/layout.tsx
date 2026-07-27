@@ -56,9 +56,17 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <a
+          href="#main"
+          className="sr-only left-4 top-4 z-[100] rounded-lg bg-navy px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute"
+        >
+          Skip to content
+        </a>
         <ScrollProgress />
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

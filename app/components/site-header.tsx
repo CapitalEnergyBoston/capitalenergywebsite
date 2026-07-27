@@ -42,7 +42,8 @@ export function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className={`group relative text-sm font-medium transition-colors ${
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={`group relative rounded text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${
                 isActive(link.href) ? "text-navy" : "text-muted hover:text-ink"
               }`}
             >
@@ -96,6 +97,7 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 className={`rounded-lg px-3 py-3 text-base font-medium ${
                   isActive(link.href)
                     ? "bg-surface-2 text-navy"
